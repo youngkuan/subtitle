@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * 字幕库网站字幕下载
- * 官网：https://www.zimuku.cn/
+ * 官网：https://www.zimuku.cn
  * @author yangkuan
  */
 public class ZimukuPageProcessor implements PageProcessor {
