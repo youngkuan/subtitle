@@ -64,7 +64,7 @@ public class ZimukuPageProcessor implements PageProcessor {
                 .setDownloader(new SeleniumDownloader("F:\\workspace\\chromedriver.exe"))
                 .addPipeline(new JsonFilePipeline("D:\\webmagic\\"))
                 .addPipeline(new ConsolePipeline())
-                .addPipeline(new SubtitlePipeline())
+                .addPipeline(new SubtitlePipeline("D:\\webmagic\\"))
                 .addUrl(initUrl)
                 .thread(5)
                 .run();

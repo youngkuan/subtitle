@@ -17,11 +17,15 @@ import static us.codecraft.webmagic.utils.FilePersistentBase.PATH_SEPERATOR;
 
 public class SubtitlePipeline implements Pipeline {
 
-    private String basePath = "D:\\webmagic\\www.zimuku.cn\\captions";
+    public SubtitlePipeline(String path) {
+        this.path = path;
+    }
+
+    private String path = "\\data\\webmagic";
 
     @Override
     public void process(ResultItems resultItems, Task task) {
-        String path = basePath + PATH_SEPERATOR;
+        String path = this.path + PATH_SEPERATOR + task.getUUID() + PATH_SEPERATOR +"captions\\";
         System.out.print("task.getUUID():"+task.getUUID());
         String fileName = DigestUtils.md5Hex(resultItems.getRequest().getUrl());
         Map<String, Object> fields = resultItems.getAll();
