@@ -12,13 +12,13 @@ public class AssrtCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String keyword = "蜘蛛侠";
+        /*String keyword = "蜘蛛侠";
         String initUrl = "http://assrt.net/sub/?searchword=" + keyword;
         Spider.create(new AssrtPageProcessor())
                 .setScheduler(new QueueScheduler()
                         .setDuplicateRemover(new HashSetDuplicateRemover()))
                 .addUrl(initUrl)
                 .thread(5)
-                .run();
+                .run();*/
     }
 }

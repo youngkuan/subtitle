@@ -1,6 +1,10 @@
 package com.yang.processor;
 
+import com.yang.dao.SubtitleRepository;
+import com.yang.pipeline.MysqlPipeline;
 import com.yang.pipeline.SubtitlePipeline;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -18,7 +22,11 @@ import java.util.List;
  * 官网：https://www.zimuku.cn
  * @author yangkuan
  */
+@Component
 public class ZimukuPageProcessor implements PageProcessor {
+
+    @Autowired
+    SubtitleRepository subtitleRepository;
 
     private String baseUrl = "https://www.zimuku.cn";
 
@@ -55,22 +63,23 @@ public class ZimukuPageProcessor implements PageProcessor {
         page.putField("subtitleFileUrls",subtitleFileUrls);
     }
 
-    public static void createSpider(String keyword) {
+    public void createSpider(String keyword) {
         String initUrl = "https://www.zimuku.cn/search?q=" + keyword + "&t=onlyst";
         System.setProperty("selenuim_config", "F:\\workspace\\webmagic-selenium\\config.ini");
         Spider.create(new ZimukuPageProcessor())
                 .setScheduler(new QueueScheduler()
                         .setDuplicateRemover(new HashSetDuplicateRemover()))
                 .setDownloader(new SeleniumDownloader("F:\\workspace\\chromedriver.exe"))
-                .addPipeline(new JsonFilePipeline("D:\\webmagic\\"))
                 .addPipeline(new ConsolePipeline())
-                .addPipeline(new SubtitlePipeline("D:\\webmagic\\"))
+//                .addPipeline(new JsonFilePipeline("D:\\webmagic\\"))
+//                .addPipeline(new SubtitlePipeline("D:\\webmagic\\"))
+                .addPipeline(new MysqlPipeline(subtitleRepository))
                 .addUrl(initUrl)
                 .thread(5)
                 .run();
     }
 
     public static void main(String[] args) {
-        createSpider("蜘蛛侠");
+
     }
 }
